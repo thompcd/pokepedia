@@ -1,0 +1,66 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+@if (_pokemons != null && _pokemons?.Count != 0)
+{
+    <div class="grid">
+    <QuickGrid Items="@FilteredItems" Pagination="@pagination">
+            <TemplateColumn Title="Rank" SortBy="@rankSort" Align="Align.Center" InitialSortDirection="Microsoft.AspNetCore.Components.QuickGrid.SortDirection.Ascending" IsDefaultSortColumn="true">
+            @* <img class="flag" src="flags/@(context.Code).svg" /> *@
+        </TemplateColumn>
+        <PropertyColumn Property="@(c => c.Name)" Sortable="true" Class="country-name">
+            <ColumnOptions>
+                <div class="search-box">
+                    <input type="search" autofocus @bind="nameFilter" @bind:event="oninput" placeholder="Pokemon name..." />
+                </div>
+            </ColumnOptions>
+        </PropertyColumn>
+        <PropertyColumn Property="@(c => c.Height)" Sortable="true" Align="Align.Right" />
+        <PropertyColumn Property="@(c => c.Weight)" Sortable="true" Align="Align.Right" />
+    </QuickGrid>
+</div>
+
+<Paginator State="@pagination" />
+}
+else
+{
+    <h1>Loading, just one moment...</h1>
+}
+
+@inject PokeApiClient PokeClient
+@inject ILogger<Home> Logger
+
+@code {
+    IQueryable<PokemonSummary>? items;
+    PaginationState pagination = new PaginationState { ItemsPerPage = 25 };
+    string nameFilter = string.Empty;
+
+    GridSort<PokemonSummary> rankSort = GridSort<PokemonSummary>
+        .ByDescending(x => x.Id)
+        .ThenDescending(x => x.Name);
+
+    IQueryable<PokemonSummary>? FilteredItems => items?.Where(x => x.Name.Contains(nameFilter, StringComparison.CurrentCultureIgnoreCase));
+
+    private List<PokemonSummary> _pokemons { get; set; } = new List<PokemonSummary>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        _pokemons = await _LocalStorage.GetItemAsync<List<PokemonSummary>>("pokemons_summary") ?? new List<PokemonSummary>();
+        items = _pokemons.AsQueryable();
+        //list of all pokemon names
+        await foreach (var poke in PokeClient.GetAllNamedResourcesAsync<Pokemon>())
+        {
+            if (_pokemons.Exists(s => string.Equals(s.Name, poke.Name))) continue;
+
+            Logger.LogInformation($"pulling info for {poke.Name}");
+            var pokeTemp = await PokeClient.GetResourceAsync<Pokemon>(poke);
+            var pokeSumm = new PokemonSummary(pokeTemp.Id, pokeTemp.Name, pokeTemp.Height, pokeTemp.Order, pokeTemp.Weight);
+            _pokemons.Add(pokeSumm);
+
+            InvokeAsync(StateHasChanged);
+        }
+        await _LocalStorage.SetItemAsync("pokemons_summary", _pokemons);
+        Logger.LogInformation("updated local pokemons_summary storage");
+  }
+}

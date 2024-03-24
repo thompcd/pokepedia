@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34330.188
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pokepedia", "Pokepedia\Pokepedia.csproj", "{F5A4E3C5-9DEB-4B96-8C4F-1E674C5F2D39}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokepedia.Models", "Pokepedia.Models\Pokepedia.Models.csproj", "{418A7CA9-58FF-4A66-B0EF-BCAB2BCC0740}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F5A4E3C5-9DEB-4B96-8C4F-1E674C5F2D39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5A4E3C5-9DEB-4B96-8C4F-1E674C5F2D39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5A4E3C5-9DEB-4B96-8C4F-1E674C5F2D39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5A4E3C5-9DEB-4B96-8C4F-1E674C5F2D39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{418A7CA9-58FF-4A66-B0EF-BCAB2BCC0740}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{418A7CA9-58FF-4A66-B0EF-BCAB2BCC0740}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{418A7CA9-58FF-4A66-B0EF-BCAB2BCC0740}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{418A7CA9-58FF-4A66-B0EF-BCAB2BCC0740}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {747F5B11-B797-4DCA-9F85-1DB5CE12707E}
+	EndGlobalSection
+EndGlobal
