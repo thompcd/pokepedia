@@ -11,8 +11,10 @@
 @using Pokepedia
 @using Pokepedia.Layout
 @using Pokepedia.Models
+@using Pokepedia.Shared
 
 @using PokeApiNet
 
 @using Blazored.LocalStorage
 @inject Blazored.LocalStorage.ILocalStorageService _LocalStorage
+@inject Pokepedia.Shared.IPokemonSummaryClient PokemonSummaryClient

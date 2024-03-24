@@ -1,5 +1,5 @@
 ﻿/* Ensure all the flags are the same size, and centered */
-.flag {
+.sprite {
     width: 3.5rem;
     height: 3.5rem;
     margin: auto;

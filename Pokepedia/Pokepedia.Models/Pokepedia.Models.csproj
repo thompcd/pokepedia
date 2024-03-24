@@ -10,4 +10,8 @@
     <PackageReference Include="System.Text.Json" Version="8.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Pokepedia.Shared\Pokepedia.Shared.csproj" />
+  </ItemGroup>
+
 </Project>

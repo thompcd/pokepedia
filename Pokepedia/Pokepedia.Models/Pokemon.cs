@@ -1,10 +1,11 @@
-﻿using System.Text.Json.Serialization;
+﻿using Pokepedia.Shared;
+using System.Text.Json.Serialization;
 
 namespace Pokepedia.Models
 {
     // Pokemon myDeserializedClass = JsonSerializer.Deserialize<Pokemon>(myJsonResponse);
 
-    public record PokemonSummary(int Id, string Name, int Height, int Order, int Weight, string frontSprite);
+    public record PokemonSummary(int Id, string Name, int Height, int Order, int Weight, string FrontSpriteUrl) : IPokemonSummary;
 
     public class PokemonFull
     {
