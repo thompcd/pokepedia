@@ -6,17 +6,18 @@
 {
     <div class="grid">
     <QuickGrid Items="@FilteredItems" Pagination="@pagination">
-            <TemplateColumn Title="Rank" SortBy="@rankSort" Align="Align.Center" InitialSortDirection="Microsoft.AspNetCore.Components.QuickGrid.SortDirection.Ascending" IsDefaultSortColumn="true">
-            @* <img class="flag" src="flags/@(context.Code).svg" /> *@
+        <TemplateColumn Align="Align.Center">
+            <img class="flag" src="@(context.frontSprite)" />
         </TemplateColumn>
-        <PropertyColumn Property="@(c => c.Name)" Sortable="true" Class="country-name">
+        <PropertyColumn Property="@(c => c.Name)" Sortable="true" Class="poke-name">
             <ColumnOptions>
                 <div class="search-box">
                     <input type="search" autofocus @bind="nameFilter" @bind:event="oninput" placeholder="Pokemon name..." />
                 </div>
             </ColumnOptions>
         </PropertyColumn>
-        <PropertyColumn Property="@(c => c.Height)" Sortable="true" Align="Align.Right" />
+            <PropertyColumn Property="@(c => c.Id)" Sortable="true" Align="Align.Right" InitialSortDirection="SortDirection.Ascending" IsDefaultSortColumn="true" />
+            <PropertyColumn Property="@(c => c.Height)" Sortable="true" Align="Align.Right" />
         <PropertyColumn Property="@(c => c.Weight)" Sortable="true" Align="Align.Right" />
     </QuickGrid>
 </div>
@@ -33,12 +34,8 @@ else
 
 @code {
     IQueryable<PokemonSummary>? items;
-    PaginationState pagination = new PaginationState { ItemsPerPage = 25 };
+    PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
     string nameFilter = string.Empty;
-
-    GridSort<PokemonSummary> rankSort = GridSort<PokemonSummary>
-        .ByDescending(x => x.Id)
-        .ThenDescending(x => x.Name);
 
     IQueryable<PokemonSummary>? FilteredItems => items?.Where(x => x.Name.Contains(nameFilter, StringComparison.CurrentCultureIgnoreCase));
 
@@ -55,7 +52,7 @@ else
 
             Logger.LogInformation($"pulling info for {poke.Name}");
             var pokeTemp = await PokeClient.GetResourceAsync<Pokemon>(poke);
-            var pokeSumm = new PokemonSummary(pokeTemp.Id, pokeTemp.Name, pokeTemp.Height, pokeTemp.Order, pokeTemp.Weight);
+            var pokeSumm = new PokemonSummary(pokeTemp.Id, pokeTemp.Name, pokeTemp.Height, pokeTemp.Order, pokeTemp.Weight, pokeTemp.Sprites.FrontDefault);
             _pokemons.Add(pokeSumm);
 
             InvokeAsync(StateHasChanged);

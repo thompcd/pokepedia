@@ -4,7 +4,7 @@ namespace Pokepedia.Models
 {
     // Pokemon myDeserializedClass = JsonSerializer.Deserialize<Pokemon>(myJsonResponse);
 
-    public record PokemonSummary(int Id, string Name, int Height, int Order, int Weight);
+    public record PokemonSummary(int Id, string Name, int Height, int Order, int Weight, string frontSprite);
 
     public class PokemonFull
     {
