@@ -1,18 +1,4 @@
-﻿text {
-    font-family: "Staatliches", cursive;
-}
-
-.App {
-    height: 100%;
-    position: absolute;
-    left: 0;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: #09a8ff;
-}
-
-.color-container {
+﻿.color-container {
     height: 100%;
     width: 100%;
     display: flex;
@@ -66,24 +52,7 @@
     grid-area: poke-type;
 }
 
-.poke-img {
-    margin: auto;
-    grid-area: poke-img;
-    width: 100%;
-    height: 100%;
-
-    @media (min-width: 701px) {
-        min-width: 620px;
-        min-height: 620px;
-    }
-
-    @media (max-width: 700px) {
-        min-width: 300px;
-        min-height: 300px;
-    }
-}
-
-.sprite {
+.img-panel {
     width: 100%;
     height: 100%;
     display: flex;

@@ -1,3 +1,17 @@
+text {
+    font-family: "Staatliches", cursive;
+}
+
+#app {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #09a8ff;
+}
+
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
 }

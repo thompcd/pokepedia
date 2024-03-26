@@ -3,9 +3,8 @@
 @if (isLoading)
 {
     <h1>Downloading pokemon in background...</h1>
-    @* <button onclick="@InvokeAsync(StateHasChanged)">Refresh</button> *@
 }
-    <div class="grid">
+    <div class="grid poke-img">
         <QuickGrid Items="@FilteredItems" Pagination="@pagination">
             <TemplateColumn Align="Align.Center">
                 <img class="sprite" src="@(context.FrontSpriteUrl)" />
@@ -21,9 +20,9 @@
             <PropertyColumn Property="@(c => c.Height)" Sortable="true" Align="Align.Right" />
             <PropertyColumn Property="@(c => c.Weight)" Sortable="true" Align="Align.Right" />
         </QuickGrid>
+        <Paginator State="@pagination" />
     </div>
 
-    <Paginator State="@pagination" />
 
 @inject ILogger<PokemonSearchGrid> Logger
 
