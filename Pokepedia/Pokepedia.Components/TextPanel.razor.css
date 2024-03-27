@@ -1,0 +1,32 @@
+﻿.poke-name {
+    display: block;
+    grid-area: poke-name;
+    padding: 8px;
+    font-size: 28px;
+    letter-spacing: 4px;
+    text-transform: capitalize;
+    height: 52px;
+    box-sizing: border-box;
+}
+
+.pokemon-name {
+    float: left;
+    font-family: "Staatliches", cursive;
+}
+
+.poke-id {
+    float: right;
+    font-family: "Staatliches", cursive;
+    text-transform: lowercase;
+}
+
+.panel {
+    border: inset #b31818 3px;
+    border-radius: 3px;
+}
+
+.screen {
+    background: linear-gradient(14deg, rgb(165, 205, 83) 60%, rgb(193, 217, 144) 65%);
+    font-family: "VT323";
+    border: inset #879a65 3px;
+}

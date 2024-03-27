@@ -1,0 +1,18 @@
+﻿<div class="poke-name panel screen">
+    <span class="pokemon-name" >@name </span >
+    <span class="pokeId" >@pokeId </span >
+</div"
+
+
+@code {
+    string name;
+    string pokeId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        name = "Pokllalj";
+        pokeId = "no. 777";
+
+        InvokeAsync(StateHasChanged);
+    }
+}

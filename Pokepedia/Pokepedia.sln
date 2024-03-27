@@ -7,9 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pokepedia", "Pokepedia\Poke
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pokepedia.Models", "Pokepedia.Models\Pokepedia.Models.csproj", "{418A7CA9-58FF-4A66-B0EF-BCAB2BCC0740}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokepedia.Components", "Pokepedia.Components\Pokepedia.Components.csproj", "{D1267E49-390D-40E2-8941-B7B08F5AEF3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pokepedia.Components", "Pokepedia.Components\Pokepedia.Components.csproj", "{D1267E49-390D-40E2-8941-B7B08F5AEF3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pokepedia.Shared", "Pokepedia.Shared\Pokepedia.Shared.csproj", "{D099CD7E-01A2-474A-AE3E-81966BF6C16D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pokepedia.Shared", "Pokepedia.Shared\Pokepedia.Shared.csproj", "{D099CD7E-01A2-474A-AE3E-81966BF6C16D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

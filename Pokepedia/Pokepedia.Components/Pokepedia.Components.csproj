@@ -6,6 +6,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="TextPanel.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="TextPanel.razor.css" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <SupportedPlatform Include="browser" />
@@ -18,6 +26,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Pokepedia.Shared\Pokepedia.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="StateContainers\" />
   </ItemGroup>
 
 </Project>
