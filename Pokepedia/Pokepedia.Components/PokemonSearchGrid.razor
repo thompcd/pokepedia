@@ -1,10 +1,12 @@
 ﻿@using Microsoft.Extensions.Logging
 
-@if (isLoading)
-{
-    <h1>Downloading pokemon in background...</h1>
-}
     <div class="grid poke-img">
+    @if (isLoading)
+    {
+        <h1>Downloading pokemon in background...</h1>
+    }
+    else
+    {
         <QuickGrid Items="@FilteredItems" Pagination="@pagination">
             <TemplateColumn Align="Align.Center">
                 <img class="sprite" src="@(context.FrontSpriteUrl)" />
@@ -21,13 +23,14 @@
             <PropertyColumn Property="@(c => c.Weight)" Sortable="true" Align="Align.Right" />
         </QuickGrid>
         <Paginator State="@pagination" />
+    }
     </div>
 
 
 @inject ILogger<PokemonSearchGrid> Logger
 
 @code {
-    PaginationState pagination = new PaginationState { ItemsPerPage = 10 };
+    PaginationState pagination = new PaginationState { ItemsPerPage = 6 };
     string nameFilter = string.Empty;
     IQueryable<IPokemonSummary>? UnfilteredItems;
     IQueryable<IPokemonSummary>? FilteredItems => UnfilteredItems?.Where(x => x.Name.Contains(nameFilter, StringComparison.CurrentCultureIgnoreCase));
