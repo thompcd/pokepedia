@@ -13,8 +13,9 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddBlazoredLocalStorage();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-builder.Services.AddScoped(p => new PokeApiClient());
+builder.Services.AddScoped<PokeApiClient>();
 
 builder.Services.AddScoped<IPokemonSummaryClient, PokemonSummaryBrowserClient>();
+builder.Services.AddScoped<ISelectedPokemonRepository, SelectedPokemonRepository>();
 
 await builder.Build().RunAsync();

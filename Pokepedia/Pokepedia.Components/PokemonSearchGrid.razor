@@ -1,4 +1,5 @@
 ﻿@using Microsoft.Extensions.Logging
+@using Pokepedia.Shared
 
     <div class="grid poke-img">
     @if (isLoading)
@@ -7,14 +8,20 @@
     }
     else
     {
+        @if (IsSinglePokemonSelected)
+        {
+            <p>Single Selected</p>
+        }
         <QuickGrid Items="@FilteredItems" Pagination="@pagination">
             <TemplateColumn Align="Align.Center">
-                <img class="sprite" src="@(context.FrontSpriteUrl)" />
+                <button @onclick="@(() => SelectPokemon(context))">
+                    <img class="sprite" src="@(context.FrontSpriteUrl)" />
+                </button>
             </TemplateColumn>
             <PropertyColumn Property="@(c => c.Name)" Sortable="true" Class="poke-name">
                 <ColumnOptions>
                     <div class="search-box">
-                        <input type="search" autofocus @bind="nameFilter" @bind:event="oninput" placeholder="Pokemon name..." />
+                        <input type="search" autofocus @bind="nameRepo.Name" @bind:event="oninput" placeholder="Pokemon name..." />
                     </div>
                 </ColumnOptions>
             </PropertyColumn>
@@ -28,18 +35,28 @@
 
 
 @inject ILogger<PokemonSearchGrid> Logger
+@inject ISelectedPokemonRepository nameRepo
 
 @code {
     PaginationState pagination = new PaginationState { ItemsPerPage = 6 };
-    string nameFilter = string.Empty;
     IQueryable<IPokemonSummary>? UnfilteredItems;
-    IQueryable<IPokemonSummary>? FilteredItems => UnfilteredItems?.Where(x => x.Name.Contains(nameFilter, StringComparison.CurrentCultureIgnoreCase));
-
+    IQueryable<IPokemonSummary>? FilteredItems => UnfilteredItems?.Where(x => x.Name.Contains(nameRepo.Name, StringComparison.CurrentCultureIgnoreCase));
+    bool IsSinglePokemonSelected => (FilteredItems?.Count() ?? 0) == 1;
     Task loadTask = null;
     bool isLoading => !loadTask?.IsCompletedSuccessfully ?? false;
 
+    protected async Task SelectPokemon(IPokemonSummary pokemon)
+    {
+        await nameRepo.Save(pokemon.Name);
+    }
+
     protected override async Task OnInitializedAsync()
     {
+        if(string.IsNullOrEmpty(nameRepo.Name))
+        {
+            await nameRepo.Load();
+        }
+
         UnfilteredItems = await PokemonSummaryClient.GetPokemonSummariesAsync();
         if (UnfilteredItems.Count() < PokemonConstants.NumberOfTotalPokemon)
         {
