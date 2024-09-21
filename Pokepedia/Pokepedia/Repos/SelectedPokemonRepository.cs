@@ -11,6 +11,7 @@ namespace Pokepedia.Shared
         private readonly ILogger<SelectedPokemonRepository> _logger;
         private readonly ILocalStorageService _storageService;
         private const string _keyName = "selected_pokemon_name";
+        private const string _keyPokeId= "selected_pokemon_id";
 
         public SelectedPokemonRepository(ILogger<SelectedPokemonRepository> logger, ILocalStorageService localStorage)
         {
@@ -23,6 +24,8 @@ namespace Pokepedia.Shared
         /// </summary>
         public string Name { get; set; } = string.Empty;
 
+        public string PokemonId { get; set; } = string.Empty ;
+
         public async Task Load()
         {
            Name = await _storageService.GetItemAsStringAsync(_keyName) ?? string.Empty;
@@ -34,10 +37,12 @@ namespace Pokepedia.Shared
             await _storageService.SetItemAsStringAsync(_keyName, Name);
         }
 
-        public async Task Save(string name)
+        public async Task Save(string name, string pokemonNumber)
         {
             Name = name;
+            PokemonId = pokemonNumber;
             await _storageService.SetItemAsStringAsync(_keyName, Name);
+            await _storageService.SetItemAsStringAsync(_keyPokeId, PokemonId);
         }
     }
 }

@@ -10,7 +10,7 @@
     {
         @if (IsSinglePokemonSelected)
         {
-            <p>Single Selected</p>
+            <TextPanel />
         }
         <QuickGrid Items="@FilteredItems" Pagination="@pagination">
             <TemplateColumn Align="Align.Center">
@@ -47,7 +47,7 @@
 
     protected async Task SelectPokemon(IPokemonSummary pokemon)
     {
-        await nameRepo.Save(pokemon.Name);
+        await nameRepo.Save(pokemon?.Name, pokemon?.Id.ToString());
     }
 
     protected override async Task OnInitializedAsync()
