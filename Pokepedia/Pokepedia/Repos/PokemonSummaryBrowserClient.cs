@@ -37,7 +37,13 @@ namespace Pokepedia.Repos
                 if (force || !_pokemonSummaries.Exists(s => string.Equals(s.Name, poke.Name))){
                     _logger?.LogTrace($"pulling info for {poke.Name}");
                     var pokeTemp = await _pokeApiClient.GetResourceAsync<Pokemon>(poke);
-                    var pokeSumm = new PokemonSummary(pokeTemp.Id, pokeTemp.Name, pokeTemp.Height, pokeTemp.Order, pokeTemp.Weight, pokeTemp.Sprites.FrontDefault);
+                    var pokeSumm = new PokemonSummary(
+                        pokeTemp.Id, 
+                        pokeTemp.Name, 
+                        pokeTemp.Height, 
+                        pokeTemp.Order, 
+                        pokeTemp.Weight, 
+                        pokeTemp.Sprites.FrontDefault);
 
                     _pokemonSummaries.Add(pokeSumm);
                     await _storageService.SetItemAsync("pokemons_summary", _pokemonSummaries);

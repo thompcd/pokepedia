@@ -1,4 +1,5 @@
 ﻿using Blazored.LocalStorage;
+using Pokepedia.Repos;
 using System.Runtime.CompilerServices;
 
 namespace Pokepedia.Shared
@@ -10,8 +11,8 @@ namespace Pokepedia.Shared
     {
         private readonly ILogger<SelectedPokemonRepository> _logger;
         private readonly ILocalStorageService _storageService;
-        private const string _keyName = "selected_pokemon_name";
         private const string _keyPokeId= "selected_pokemon_id";
+        private const string _keyPokeName= "selected_pokemon_name";
 
         public SelectedPokemonRepository(ILogger<SelectedPokemonRepository> logger, ILocalStorageService localStorage)
         {
@@ -19,30 +20,50 @@ namespace Pokepedia.Shared
             _storageService = localStorage ?? throw new ArgumentNullException(nameof(_storageService));
         }
 
+        public string Name { get; set; }
+
+        //private IPokemonSummary _pokemon;
         /// <summary>
         /// Lazy load name from repository.
         /// </summary>
-        public string Name { get; set; } = string.Empty;
-
-        public string PokemonId { get; set; } = string.Empty ;
+        public IPokemonSummary Pokemon { get; set; }
+        //{
+        //    get { return _pokemon; }
+        //    set
+        //    {
+        //        if (_pokemon != value)
+        //        {
+        //            Save(value);
+        //            _pokemon = value;
+        //        }
+        //    }
+        //}
 
         public async Task Load()
         {
-           Name = await _storageService.GetItemAsStringAsync(_keyName) ?? string.Empty;
+            var val = await _storageService.GetItemAsStringAsync(_keyPokeId);
+            Pokemon = val.ToPokemonSummary();
+            Name = await _storageService.GetItemAsStringAsync(_keyPokeName) ?? string.Empty;
         }
 
         public async Task Clear()
         {
-            Name = string.Empty;
-            await _storageService.SetItemAsStringAsync(_keyName, Name);
+            var Name = string.Empty;
+            await _storageService.SetItemAsStringAsync(_keyPokeId, Name);
+            await _storageService.SetItemAsStringAsync(_keyPokeName, Name);
         }
 
-        public async Task Save(string name, string pokemonNumber)
+        public async Task Save(string name)
         {
             Name = name;
-            PokemonId = pokemonNumber;
-            await _storageService.SetItemAsStringAsync(_keyName, Name);
-            await _storageService.SetItemAsStringAsync(_keyPokeId, PokemonId);
+            await _storageService.SetItemAsStringAsync(_keyPokeName, Name);
+        }
+
+        public async Task Save(IPokemonSummary pokemon)
+        {
+            Pokemon = pokemon;
+            await Save(pokemon.Name);
+            await _storageService.SetItemAsStringAsync(_keyPokeId, Pokemon.ToValue());
         }
     }
 }

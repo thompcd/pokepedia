@@ -40,14 +40,16 @@
 @code {
     PaginationState pagination = new PaginationState { ItemsPerPage = 6 };
     IQueryable<IPokemonSummary>? UnfilteredItems;
+    bool IsExactMatchSelected => UnfilteredItems?.Where(x => x.Name.Equals(nameRepo.Name, StringComparison.CurrentCultureIgnoreCase)).Count() == 1;
     IQueryable<IPokemonSummary>? FilteredItems => UnfilteredItems?.Where(x => x.Name.Contains(nameRepo.Name, StringComparison.CurrentCultureIgnoreCase));
-    bool IsSinglePokemonSelected => (FilteredItems?.Count() ?? 0) == 1;
+    //if the wildcard filter returned a single result or if somebody typed in an exact name
+    bool IsSinglePokemonSelected => ((FilteredItems?.Count() ?? 0) == 1) || IsExactMatchSelected;
     Task loadTask = null;
     bool isLoading => !loadTask?.IsCompletedSuccessfully ?? false;
 
     protected async Task SelectPokemon(IPokemonSummary pokemon)
     {
-        await nameRepo.Save(pokemon?.Name, pokemon?.Id.ToString());
+        await nameRepo.Save(pokemon);
     }
 
     protected override async Task OnInitializedAsync()

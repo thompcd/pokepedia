@@ -1,6 +1,6 @@
 ﻿<div class="poke-name panel screen">
-    <span class="pokemon-name" >@nameRepo.Name </span >
-    <span class="pokeId" >@nameRepo.PokemonId </span >
+    <span class="pokemon-name" >@nameRepo.Pokemon.Name </span >
+    <span class="pokeId" >@nameRepo.Pokemon.Id </span >
 </div>
 
 @inject ISelectedPokemonRepository nameRepo
@@ -8,7 +8,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (string.IsNullOrEmpty(nameRepo.Name) || string.IsNullOrEmpty(nameRepo.PokemonId))
+        if (nameRepo.Pokemon == null)
         {
             await nameRepo.Load();
         }
